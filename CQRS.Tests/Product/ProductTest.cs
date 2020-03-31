@@ -20,11 +20,19 @@ namespace CQRS
         }
 
         [TestMethod]
+        public async Task Custom()
+        {
+            var command = new CustomProductCommand { Id = 1 };
+            //CustomProductCommandHandler使用DeleteProductCommand, DeleteProductCommandHandler會接收不到
+            await _mediator.Send(command);
+        }
+
+        [TestMethod]
         public async Task Delete()
         {
             var command = new DeleteProductCommand { Id = 1 };
 
-            await _mediator.Send(command);
+            await _mediator.Send(command);//除了Delete, Custom也會
         }
 
         [TestMethod]
